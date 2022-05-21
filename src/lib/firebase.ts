@@ -1,14 +1,28 @@
 import * as firebaseApp from 'firebase/app'
 import * as firebaseAuth from 'firebase/auth'
 
-import { API_KEY, AUTH_DOMAIN, PROJECT_ID } from '@/constants/auth'
+import {
+  APP_ID,
+  API_KEY,
+  PROJECT_ID,
+  AUTH_DOMAIN,
+  MEASUREMENT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID
+} from '@/constants/auth'
 
 if (!firebaseApp.getApps().length) {
   firebaseApp.initializeApp({
     apiKey: API_KEY,
     projectId: PROJECT_ID,
-    authDomain: AUTH_DOMAIN
+    authDomain: AUTH_DOMAIN,
+    appId: APP_ID,
+    storageBucket: STORAGE_BUCKET,
+    messagingSenderId: MESSAGING_SENDER_ID,
+    measurementId: MEASUREMENT_ID
   })
 }
 
-export { firebaseApp, firebaseAuth }
+const auth = firebaseAuth.getAuth()
+
+export { auth, firebaseApp, firebaseAuth }
