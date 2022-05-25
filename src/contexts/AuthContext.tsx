@@ -3,10 +3,11 @@ import {
   ReactNode,
   useCallback,
   useContext,
-  useEffect,
   useState
 } from 'react'
 import { auth, firebaseAuth } from '@/lib/firebase'
+import { createUser } from '@/lib/database'
+import { handleFormatUser } from '@/handlers'
 
 type AuthContextData = {
   user: firebaseAuth.User | null
@@ -29,6 +30,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
     const data = await firebaseAuth.signInWithPopup(auth, githubAuth)
 
+    await createUser(handleFormatUser(data.user))
+
     setUser(data.user)
 
     return data.user
@@ -39,8 +42,6 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
     setUser(null)
   }, [])
-
-  // useEffect(() => {}, [])
 
   return (
     <AuthContext.Provider value={{ user, signIn, signOut }}>

@@ -22,12 +22,12 @@ const Home: NextPage = () => {
 
       {user && (
         <Flex
+          as="header"
+          w="full"
           py={[2, 4]}
           px={[6, 8]}
-          w="full"
           borderBottom="1px"
           borderColor="blue.200"
-          as="header"
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between"

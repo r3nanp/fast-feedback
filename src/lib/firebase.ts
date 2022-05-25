@@ -1,5 +1,6 @@
 import * as firebaseApp from 'firebase/app'
 import * as firebaseAuth from 'firebase/auth'
+import * as firestore from 'firebase/firestore'
 
 import {
   APP_ID,
@@ -25,4 +26,4 @@ if (!firebaseApp.getApps().length) {
 
 const auth = firebaseAuth.getAuth()
 
-export { auth, firebaseApp, firebaseAuth }
+export { auth, firestore, firebaseApp, firebaseAuth }
