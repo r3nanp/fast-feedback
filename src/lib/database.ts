@@ -6,6 +6,7 @@ export type UserData = {
   provider: string | null
   email: string | null
   image: string | null
+  token: string
 }
 
 export const createUser = async (user: UserData) => {

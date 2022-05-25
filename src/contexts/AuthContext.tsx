@@ -11,7 +11,8 @@ import { handleFormatUser } from '@/handlers'
 
 type AuthContextData = {
   user: firebaseAuth.User | null
-  signIn: () => Promise<firebaseAuth.User>
+  isLoading: boolean
+  signIn: () => Promise<void>
   signOut: () => Promise<void>
 }
 
@@ -23,6 +24,24 @@ const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
   const [user, setUser] = useState<firebaseAuth.User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const handleUser = async (userData: firebaseAuth.User | null) => {
+    if (!userData) {
+      setUser(null)
+      setIsLoading(false)
+      return false
+    }
+
+    const formattedUser = await handleFormatUser(userData)
+
+    await createUser(formattedUser)
+
+    setUser(userData)
+
+    setIsLoading(false)
+    return formattedUser
+  }
 
   const signIn = useCallback(async () => {
     const githubAuth = new firebaseAuth.GithubAuthProvider()
@@ -30,21 +49,16 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
     const data = await firebaseAuth.signInWithPopup(auth, githubAuth)
 
-    await createUser(handleFormatUser(data.user))
-
-    setUser(data.user)
-
-    return data.user
+    handleUser(data.user)
   }, [])
 
   const signOut = useCallback(async () => {
+    await handleUser(null)
     await firebaseAuth.signOut(auth)
-
-    setUser(null)
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
+    <AuthContext.Provider value={{ isLoading, user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )
