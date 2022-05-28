@@ -1,5 +1,5 @@
-import { UserData } from '@/lib/database'
 import { firebaseAuth } from '@/lib/firebase'
+import { UserData } from '@/types/UserData'
 
 export const handleFormatUser = async (
   firebaseUser: firebaseAuth.User

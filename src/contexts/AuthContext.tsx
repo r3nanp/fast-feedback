@@ -8,9 +8,10 @@ import {
 import { auth, firebaseAuth } from '@/lib/firebase'
 import { createUser } from '@/lib/database'
 import { handleFormatUser } from '@/handlers'
+import { UserData } from '@/types/UserData'
 
 type AuthContextData = {
-  user: firebaseAuth.User | null
+  user: UserData | null
   isLoading: boolean
   signIn: () => Promise<void>
   signOut: () => Promise<void>
@@ -23,7 +24,7 @@ type AuthContextProps = {
 const AuthContext = createContext({} as AuthContextData)
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
-  const [user, setUser] = useState<firebaseAuth.User | null>(null)
+  const [user, setUser] = useState<UserData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const handleUser = async (userData: firebaseAuth.User | null) => {
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
     await createUser(formattedUser)
 
-    setUser(userData)
+    setUser(formattedUser)
 
     setIsLoading(false)
     return formattedUser

@@ -1,13 +1,5 @@
 import { firestore } from './firebase'
-
-export type UserData = {
-  id: string
-  name: string | null
-  provider: string | null
-  email: string | null
-  image: string | null
-  token: string
-}
+import { UserData } from '@/types/UserData'
 
 export const createUser = async (user: UserData) => {
   const db = firestore.getFirestore()
