@@ -1,5 +1,7 @@
-export const Github = () => (
-  <svg>
+import { IconProps } from '../icon.types'
+
+export const Github = ({ ...rest }: IconProps) => (
+  <svg {...rest}>
     <g
       fill="none"
       stroke="currentColor"
