@@ -1,4 +1,5 @@
-import { Flex, Text, Heading } from '@chakra-ui/react'
+import { Flex, Heading } from '@chakra-ui/react'
+import { AddSiteModal } from '../AddSiteModal'
 
 export const SiteEmptyState = () => {
   return (
@@ -15,7 +16,7 @@ export const SiteEmptyState = () => {
         You haven’t added any sites.
       </Heading>
 
-      <Text mb={4}>Let’s get started.</Text>
+      <AddSiteModal>Add your first site</AddSiteModal>
     </Flex>
   )
 }

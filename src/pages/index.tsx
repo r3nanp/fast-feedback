@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { Button } from '@chakra-ui/react'
 
 import { useAuthContext } from '@/contexts/AuthContext'
-import { FreePlanEmptyState } from '@/components'
+import { DashboardShell, SiteEmptyState } from '@/components'
 
 const Home: NextPage = () => {
   const { user, signIn, signOut } = useAuthContext()
@@ -17,10 +17,11 @@ const Home: NextPage = () => {
       {!user && <Button onClick={signIn}>Sign in</Button>}
 
       {user && (
-        <>
-          <FreePlanEmptyState user={user} />
+        <DashboardShell user={user}>
+          {/* <FreePlanEmptyState user={user} /> */}
+          <SiteEmptyState />
           <Button onClick={signOut}>Sign out</Button>
-        </>
+        </DashboardShell>
       )}
     </>
   )
